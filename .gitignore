@@ -1,0 +1,8 @@
+# BMAD submodule (pinned, not modified by users)
+bmad-method/
+
+# Runtime / temp
+*.pyc
+__pycache__/
+.DS_Store
+Thumbs.db

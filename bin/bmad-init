@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Initialize a project with centralized BMAD home
+# Usage: bmad-init [project-root]
+# Defaults to current directory
+
+set -e
+
+PROJECT="${1:-$(pwd)}"
+BMAD_HOME="${BMAD_HOME:-$HOME/.hermes/bmad-home}"
+
+if [ ! -d "$BMAD_HOME" ]; then
+    echo "Error: BMAD home not found at $BMAD_HOME"
+    echo "Run ~/.hermes-bmad/install.sh first, or set BMAD_HOME"
+    exit 1
+fi
+
+echo "Initializing BMAD in: $PROJECT"
+
+# Create project folders
+mkdir -p "$PROJECT/docs" "$PROJECT/bmad-output"
+
+# Link centralized _bmad/
+if [ -L "$PROJECT/_bmad" ]; then
+    echo "  _bmad/ symlink already exists"
+elif [ -d "$PROJECT/_bmad" ]; then
+    echo "  Warning: _bmad/ exists as a directory - remove it first to use centralized setup"
+    echo "  rm -rf \"$PROJECT/_bmad\" && bmad-init \"$PROJECT\""
+else
+    ln -sf "$BMAD_HOME" "$PROJECT/_bmad"
+    echo "  Linked _bmad/ -> $BMAD_HOME"
+fi
+
+# Create .gitignore entries
+for ENTRY in "_bmad/" "bmad-output/"; do
+    if ! grep -q "^$ENTRY" "$PROJECT/.gitignore" 2>/dev/null; then
+        echo "$ENTRY" >> "$PROJECT/.gitignore"
+    fi
+done
+
+echo "  Updated .gitignore"
+echo ""
+echo "BMAD ready in $PROJECT"
+echo "  docs/        -> planning artifacts"
+echo "  bmad-output/ -> workflow outputs"
+echo "  _bmad/       -> centralized scripts & config"

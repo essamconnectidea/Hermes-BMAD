@@ -1,0 +1,12 @@
+[core]
+project_name = "bmad-project"
+planning_artifacts = "docs"
+implementation_artifacts = "bmad-output"
+
+[modules.bmm]
+planning_artifacts = "docs"
+implementation_artifacts = "bmad-output"
+
+[agent]
+communication_style = "default"
+language = "en"

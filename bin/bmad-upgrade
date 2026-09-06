@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Upgrade BMAD-METHOD to the latest tagged version
+# Checks for structural changes before updating
+
+set -e
+
+HERMES_BMAD="${HERMES_BMAD:-$HOME/.hermes-bmad}"
+BMAD_METHOD="$HERMES_BMAD/bmad-method"
+
+if [ ! -d "$BMAD_METHOD" ]; then
+    echo "Error: BMAD-METHOD not found at $BMAD_METHOD"
+    echo "Re-run install.sh"
+    exit 1
+fi
+
+echo "Checking BMAD-METHOD for updates..."
+cd "$BMAD_METHOD"
+
+CURRENT=$(git describe --tags --abbrev=0 2>/dev/null || echo "unknown")
+echo "  Current version: $CURRENT"
+
+git fetch --tags --quiet
+
+LATEST=$(git tag --sort=-v:refname | head -1)
+echo "  Latest version:  $LATEST"
+
+if [ "$CURRENT" = "$LATEST" ]; then
+    echo "  Already up to date."
+    exit 0
+fi
+
+echo ""
+echo "A new version is available: $CURRENT -> $LATEST"
+echo ""
+echo "Before upgrading, check the Hermes-BMAD repo for compatibility:"
+echo "  cd $HERMES_BMAD && git pull"
+echo ""
+echo "If Hermes-BMAD has been updated for $LATEST, run:"
+echo ""
+echo "  cd $BMAD_METHOD && git checkout $LATEST"
+echo "  cd $HERMES_BMAD && git pull"
+echo "  bash $HERMES_BMAD/install.sh"
