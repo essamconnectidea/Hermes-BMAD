@@ -130,16 +130,26 @@ CONFIG
         cp "$HERMES_BMAD/profiles/$NAME/SKILL.md" "$DIR/skills/"
     fi
     
+    # Copy party-mode mediator if present
+    if [ -f "$HERMES_BMAD/profiles/party-mediator.skill.md" ]; then
+        cp "$HERMES_BMAD/profiles/party-mediator.skill.md" "$DIR/skills/PARTY_MEDIATOR.md"
+    fi
+    
+    # Copy orchestrator skill if present
+    if [ -f "$HERMES_BMAD/profiles/orchestrator.skill.md" ]; then
+        cp "$HERMES_BMAD/profiles/orchestrator.skill.md" "$DIR/skills/HERMES_BMAD_ORCHESTRATOR.md"
+    fi
+    
     echo "  Created $NAME"
 }
 
 # Create each profile with its model and skills
 create_profile "amelia-bmad" "$HERMES_MODEL" "bmad-build" "bmad-spec" "bmad-project-context" "bmad-agent-dev"
 create_profile "smith-bmad" "nvidia/nemotron-3-ultra-550b-a55b:free" "bmad-code-review" "bmad-review" "bmad-agent-dev"
-create_profile "mary-bmad" "$HERMES_MODEL" "bmad-brainstorming" "bmad-deep-recon" "bmad-product-brief" "bmad-prfaq" "bmad-forge-idea" "bmad-help" "bmad-agent-analyst"
-create_profile "john-bmad" "$HERMES_MODEL" "bmad-prd" "bmad-create-epics-and-stories" "bmad-sprint-planning" "bmad-correct-course" "bmad-help" "bmad-agent-pm"
-create_profile "winston-bmad" "$HERMES_MODEL" "bmad-architecture" "bmad-project-context" "bmad-help" "bmad-agent-architect"
-create_profile "sally-bmad" "$HERMES_MODEL" "bmad-ux" "bmad-help" "bmad-agent-ux-designer"
+create_profile "mary-bmad" "$HERMES_MODEL" "bmad-brainstorming" "bmad-deep-recon" "bmad-product-brief" "bmad-prfaq" "bmad-forge-idea" "bmad-help" "bmad-agent-analyst" "bmad-party-mode"
+create_profile "john-bmad" "$HERMES_MODEL" "bmad-prd" "bmad-create-epics-and-stories" "bmad-sprint-planning" "bmad-correct-course" "bmad-help" "bmad-agent-pm" "bmad-party-mode"
+create_profile "winston-bmad" "$HERMES_MODEL" "bmad-architecture" "bmad-project-context" "bmad-help" "bmad-agent-architect" "bmad-party-mode"
+create_profile "sally-bmad" "$HERMES_MODEL" "bmad-ux" "bmad-help" "bmad-agent-ux-designer" "bmad-party-mode"
 
 # ── Step 5: Install centralized BMAD home ──
 echo "[5/6] Installing centralized BMAD home..."

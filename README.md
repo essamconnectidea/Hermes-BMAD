@@ -15,6 +15,22 @@
 | `winston-bmad` | Winston | Architect — architecture spine, ADRs | `deepseek/deepseek-v4-flash` |
 | `sally-bmad` | Sally | UX Designer — DESIGN.md + EXPERIENCE.md | `deepseek/deepseek-v4-flash` |
 
+## Interaction Modes
+
+Hermes-BMAD works in two modes, depending on the workflow type:
+
+### Three-Way Mode (Planning: brainstorming, PRD, architecture, UX)
+
+The BMAD agent (Mary/John/Winston/Sally) asks questions during the workflow. Hermes relays them to you **with its own analysis**, you discuss together, then Hermes submits the consolidated answer back to the agent. You and Hermes shape the output as partners — Hermes is a thinking partner, not a messenger.
+
+### Supervisor Mode (Execution: building code, code review, market research, deep recon, sprint planning)
+
+Hermes delegates the task to the agent, the agent works independently, Hermes collects and reviews the output, and **approves it before showing you**. You only see the final approved result — never intermediate or unapproved work.
+
+### Party Mode (multi-agent discussions)
+
+For discussions involving multiple agents at once, `bmad-party-mode` lets them collaborate in one conversation. Hermes mediates, collects their output, and presents the approved result.
+
 ## Quick Install
 
 ```bash
